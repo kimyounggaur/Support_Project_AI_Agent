@@ -1,8 +1,4 @@
-"use server";
-
 import { createHash } from "node:crypto";
-import { hasSupabasePublicEnv } from "@/lib/env";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { grantNoticeTextInputSchema } from "./notices.schema";
 
 type ActionStatus = "idle" | "success" | "error";
@@ -40,21 +36,9 @@ export const initialGrantNoticeFormState: GrantNoticeFormState = {
   message: "",
 };
 
-const defaultDependencies: GrantNoticeActionDependencies = {
-  hasSupabaseEnv: hasSupabasePublicEnv,
-  createClient: createSupabaseServerClient,
-};
-
-export async function saveGrantNoticeAction(
-  _previousState: GrantNoticeFormState,
-  formData: FormData,
-) {
-  return saveGrantNotice(formData);
-}
-
 export async function saveGrantNotice(
   formData: FormData,
-  dependencies: GrantNoticeActionDependencies = defaultDependencies,
+  dependencies: GrantNoticeActionDependencies,
 ): Promise<GrantNoticeFormState> {
   const parsed = grantNoticeTextInputSchema.safeParse({
     title: formData.get("title"),

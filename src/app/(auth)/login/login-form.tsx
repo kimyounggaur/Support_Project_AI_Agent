@@ -1,10 +1,8 @@
 "use client";
 
 import { useActionState } from "react";
-import {
-  initialLoginFormState,
-  requestLoginLinkAction,
-} from "@/features/auth/login-actions";
+import { initialLoginFormState } from "@/features/auth/login-actions";
+import { requestLoginLinkAction } from "@/features/auth/login-server-actions";
 
 type LoginFormProps = {
   isConfigured: boolean;

@@ -1,10 +1,8 @@
 "use client";
 
 import { useActionState } from "react";
-import {
-  initialGrantNoticeFormState,
-  saveGrantNoticeAction,
-} from "@/features/notices/notice-actions";
+import { initialGrantNoticeFormState } from "@/features/notices/notice-actions";
+import { saveGrantNoticeAction } from "@/features/notices/notice-server-actions";
 
 export function NoticeForm() {
   const [state, formAction, pending] = useActionState(

@@ -1,9 +1,4 @@
-"use server";
-
-import { headers } from "next/headers";
 import { z } from "zod";
-import { hasSupabasePublicEnv } from "@/lib/env";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 type ActionStatus = "idle" | "success" | "error";
 
@@ -40,22 +35,9 @@ const emailSchema = z.object({
   email: z.string().trim().email(),
 });
 
-const defaultDependencies: LoginActionDependencies = {
-  hasSupabaseEnv: hasSupabasePublicEnv,
-  createClient: createSupabaseServerClient,
-  getRedirectOrigin,
-};
-
-export async function requestLoginLinkAction(
-  _previousState: LoginFormState,
-  formData: FormData,
-) {
-  return requestLoginLink(formData);
-}
-
 export async function requestLoginLink(
   formData: FormData,
-  dependencies: LoginActionDependencies = defaultDependencies,
+  dependencies: LoginActionDependencies,
 ): Promise<LoginFormState> {
   const parsed = emailSchema.safeParse({
     email: formData.get("email"),
@@ -98,14 +80,4 @@ export async function requestLoginLink(
     status: "success",
     message: "이메일로 로그인 링크를 보냈습니다.",
   };
-}
-
-async function getRedirectOrigin() {
-  const headerStore = await headers();
-
-  return (
-    headerStore.get("origin") ??
-    process.env.NEXT_PUBLIC_APP_URL ??
-    "https://support-project-ai-agent.vercel.app"
-  );
 }
