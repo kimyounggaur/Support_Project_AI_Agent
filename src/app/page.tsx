@@ -1,3 +1,5 @@
+import { HomeActions } from "./home-actions";
+
 export default function Home() {
   const workflow = [
     { label: "공고 분석", value: "대기", tone: "bg-emerald-50 text-emerald-700" },
@@ -18,14 +20,7 @@ export default function Home() {
               지원나침반 AI
             </h1>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <button className="rounded-md bg-zinc-950 px-4 py-2 text-sm font-medium text-white shadow-sm">
-              공고 등록
-            </button>
-            <button className="rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-800">
-              사업 프로필
-            </button>
-          </div>
+          <HomeActions />
         </header>
 
         <section className="grid gap-4 md:grid-cols-4">
