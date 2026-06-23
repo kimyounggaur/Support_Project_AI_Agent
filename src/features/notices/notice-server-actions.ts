@@ -1,6 +1,6 @@
 "use server";
 
-import type { GrantNoticeFormState } from "./notice-actions";
+import type { GrantNoticeFormState } from "./notice-form-state";
 import { saveGrantNotice } from "./notice-actions";
 import { hasSupabasePublicEnv } from "@/lib/env";
 import { createSupabaseServerClient } from "@/lib/supabase/server";

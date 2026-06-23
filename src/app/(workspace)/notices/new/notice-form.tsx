@@ -1,8 +1,11 @@
 "use client";
 
 import { useActionState } from "react";
-import { initialGrantNoticeFormState } from "@/features/notices/notice-actions";
+import { initialGrantNoticeFormState } from "@/features/notices/notice-form-state";
 import { saveGrantNoticeAction } from "@/features/notices/notice-server-actions";
+
+const ACCEPTED_NOTICE_FILES =
+  ".pdf,.docx,.txt,.md,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/markdown";
 
 export function NoticeForm() {
   const [state, formAction, pending] = useActionState(
@@ -11,7 +14,11 @@ export function NoticeForm() {
   );
 
   return (
-    <form action={formAction} className="mt-6 space-y-5">
+    <form
+      action={formAction}
+      encType="multipart/form-data"
+      className="mt-6 space-y-5"
+    >
       <div className="space-y-2">
         <label htmlFor="title" className="text-sm font-medium text-zinc-800">
           공고명
@@ -44,6 +51,52 @@ export function NoticeForm() {
           minLength={20}
         />
       </div>
+
+      <div className="space-y-2">
+        <label
+          htmlFor="attachments"
+          className="text-sm font-medium text-zinc-800"
+        >
+          첨부 파일
+        </label>
+        <input
+          id="attachments"
+          name="attachments"
+          type="file"
+          multiple
+          accept={ACCEPTED_NOTICE_FILES}
+          className="block w-full rounded-md border border-dashed border-zinc-300 bg-zinc-50 px-3 py-3 text-sm text-zinc-700 file:mr-4 file:rounded-md file:border-0 file:bg-zinc-950 file:px-3 file:py-2 file:text-sm file:font-medium file:text-white hover:bg-zinc-100"
+        />
+        <p className="text-xs leading-5 text-zinc-500">
+          PDF, DOCX, TXT, MD 파일을 최대 5개까지 첨부할 수 있습니다.
+        </p>
+      </div>
+
+      {state.documents.length > 0 ? (
+        <section
+          aria-label="첨부 파일 분석 결과"
+          className="space-y-3 border-l-2 border-emerald-500 pl-4"
+        >
+          <h2 className="text-base font-semibold text-zinc-900">분석 결과</h2>
+          <ul className="space-y-3">
+            {state.documents.map((document) => (
+              <li key={document.fileName} className="space-y-1">
+                <p className="text-sm font-medium text-zinc-900">
+                  {document.fileName}
+                </p>
+                <p className="text-sm leading-6 text-zinc-700">
+                  {document.summary}
+                </p>
+                {document.warnings.length > 0 ? (
+                  <p className="text-xs leading-5 text-amber-700">
+                    {document.warnings.join(" ")}
+                  </p>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <button
