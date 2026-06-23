@@ -8,6 +8,7 @@
 - Local Node is `v25.2.1`; `.nvmrc` recommends Node `22.13.1` for a stable LTS-like runtime.
 - pnpm was installed but `pnpm install` failed during importing with no actionable error in this Windows path. npm install completed, so Phase 0 uses npm scripts and `package-lock.json`.
 - Supabase and OpenAI credentials are not available yet. Implementation must continue with `.env.example`, mocks, and server-only lazy clients until keys are supplied.
+- Phase 1 can add Supabase SSR client factories and SQL migrations without a live project. Actual login smoke tests and user A/B RLS execution tests require a configured Supabase project.
 - HWP/HWPX parsing remains out of MVP scope; only original retention and PDF conversion guidance are planned.
 
 ## Product Data

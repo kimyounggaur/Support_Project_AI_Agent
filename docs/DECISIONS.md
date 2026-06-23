@@ -20,3 +20,17 @@ The design target is pnpm. In this local Windows workspace, both pnpm 11.8.0 and
 - Status: Accepted
 
 The first screen should be the product workspace rather than a marketing landing page. Phase 0 replaces the generated Next.js starter page with a Korean dashboard shell that exposes the core workflow labels and product metadata while deeper data-backed screens are developed in later phases.
+
+## ADR-0004 - Add explicit grants beside RLS policies
+
+- Date: 2026-06-23
+- Status: Accepted
+
+Supabase's 2026 platform change means new public tables may not be exposed to the Data API automatically. Migrations must include explicit grants for authenticated access as well as RLS policies. RLS remains the row-level boundary; grants make table-level Data API access deliberate and reviewable.
+
+## ADR-0005 - Use `@supabase/ssr` split clients for Next.js
+
+- Date: 2026-06-23
+- Status: Accepted
+
+Supabase's current SSR guidance uses `@supabase/ssr` with separate browser and server clients. Server clients are created lazily and use Next.js cookies so `next build` does not require runtime env values.
